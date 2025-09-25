@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stuart el Minion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4169E1, #1E90FF);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-50px); }
+            100% { transform: translateX(50px); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            z-index: 2;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stuart-card {
+            background: radial-gradient(circle at center, #FFFF00, #FFD700);
+            border-radius: 50px;
+            padding: 3rem;
+            margin: 2rem auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 8px solid #FF6347;
+            position: relative;
+            max-width: 800px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .stuart-face {
+            width: 200px;
+            height: 250px;
+            background: linear-gradient(135deg, #FFFF00, #FFD700);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 0 auto 2rem;
+            position: relative;
+            border: 5px solid #FFA500;
+            box-shadow: inset 0 10px 20px rgba(255,255,255,0.3);
+        }
+
+        .eye {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #333;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .pupil {
+            width: 25px;
+            height: 25px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+            95% { transform: translate(-50%, -50%) scaleY(0.1); }
+        }
+
+        .mouth {
+            width: 40px;
+            height: 20px;
+            background: #333;
+            border-radius: 0 0 40px 40px;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .info-section {
+            background: rgba(255,255,255,0.9);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-section h2 {
+            color: #FF6347;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .fact-card {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border: 3px solid #FF6347;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .fact-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, #4169E1, #1E90FF);
+            color: white;
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(1deg); }
+            75% { transform: rotate(-1deg); }
+        }
+
+        .banana {
+            width: 50px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            animation: spin 8s linear infinite;
+        }
+
+        .banana:nth-child(1) { top: 10px; left: 10px; animation-delay: 0s; }
+        .banana:nth-child(2) { top: 10px; right: 10px; animation-delay: 2s; }
+        .banana:nth-child(3) { bottom: 10px; left: 10px; animation-delay: 4s; }
+        .banana:nth-child(4) { bottom: 10px; right: 10px; animation-delay: 6s; }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .interactive-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .minion-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border: 3px solid #FF6347;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .minion-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        }
+
+        .minion-btn:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 1rem; }
+            .stuart-card { padding: 2rem; margin: 1rem; }
+            .stuart-face { width: 150px; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🍌 STUART EL MINION 🍌</h1>
+        <p>El pequeño rebelde de un solo ojo</p>
+    </header>
+
+    <div class="container">
+        <div class="stuart-card">
+            <div class="stuart-face">
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+            <h2 style="text-align: center; color: #FF6347; margin-bottom: 1rem;">¡Bello!</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #333;">
+                Stuart es el minion más rebelde y travieso del grupo. Con su característico ojo único 
+                y su amor por las bananas, siempre está listo para la aventura.
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h2>Sobre Stuart</h2>
+            <p>Stuart es uno de los minions más reconocibles y queridos de la franquicia. Su personalidad única 
+            y su aspecto distintivo lo convierten en un favorito de los fans de todas las edades.</p>
+            
+            <div class="facts">
+                <div class="fact-card">
+                    <h3>🎸 Personalidad</h3>
+                    <p>Rebelde, perezoso pero leal. Le encanta tocar el ukelele y es muy relajado.</p>
+                </div>
+                <div class="fact-card">
+                    <h3>👁️ Características</h3>
+                    <p>Tiene un solo ojo grande, cabello puntiagudo y estatura mediana entre los minions.</p>
+                </div>
+                <div class="fact-card">
+                    <h3>🍌 Aficiones</h3>
+                    <p>Ama las bananas, la música y pasar tiempo relajándose. Es muy creativo.</p>
+                </div>
+                <div class="fact-card">
+                    <h3>🎬 Apariciones</h3>
+                    <p>Protagonista en "Minions" (2015) y personaje importante en toda la saga.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-section">
+            <div class="banana"></div>
+            <div class="banana"></div>
+            <div class="banana"></div>
+            <div class="banana"></div>
+            <div class="quote">"Bananaaaa! Potato la tu ya!"</div>
+            <p>- Stuart expresando su amor por las bananas</p>
+        </div>
+
+        <div class="info-section">
+            <h2>La Historia de Stuart</h2>
+            <p>Stuart ha sido parte de aventuras épicas desde el antiguo Egipto hasta los tiempos modernos. 
+            Su naturaleza rebelde a menudo lo mete en problemas, pero su corazón dorado y su lealtad 
+            hacia sus amigos siempre lo sacan adelante. Es especialmente conocido por su papel 
+            protagonista en la búsqueda del villano perfecto junto con Kevin y Bob.</p>
+        </div>
+
+        <div class="interactive-section">
+            <h2 style="color: #FF6347; margin-bottom: 1rem;">¡Interactúa con Stuart!</h2>
+            <button class="minion-btn" onclick="playSound()">🎵 Escuchar a Stuart</button>
+            <button class="minion-btn" onclick="changeColor()">🎨 Cambiar Colores</button>
+            <button class="minion-btn" onclick="showFact()">📚 Dato Curioso</button>
+            
+            <div id="message" style="margin-top: 2rem; font-size: 1.2rem; font-weight: bold; color: #FF6347;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Stuart el Minion Fan Site | Creado con amor por los fans de los Minions 🍌</p>
+    </footer>
+
+    <script>
+        const stuartSounds = [
+            "¡Bananaaaaa!",
+            "¡Bello!",
+            "¡Potato la tu ya!",
+            "¡Underware!",
+            "¡Gelato!",
+            "¡Me quiero banana!"
+        ];
+
+        const funFacts = [
+            "Stuart es el único minion con un solo ojo en el trío principal",
+            "Le encanta tocar la guitarra y es muy musical",
+            "Su personalidad rebelde lo convierte en el 'bad boy' de los minions",
+            "Fue uno de los primeros minions creados por Gru",
+            "Su nombre podría estar inspirado en Stuart Sutcliffe de The Beatles",
+            "Es el minion más alto del trío protagonista de la película Minions"
+        ];
+
+        let colorIndex = 0;
+        const colors = [
+            'linear-gradient(135deg, #FFD700, #FFA500, #FF6347)',
+            'linear-gradient(135deg, #FF69B4, #FFB6C1, #FFA07A)',
+            'linear-gradient(135deg, #00CED1, #40E0D0, #48D1CC)',
+            'linear-gradient(135deg, #98FB98, #90EE90, #7CFC00)',
+            'linear-gradient(135deg, #DDA0DD, #DA70D6, #BA55D3)'
+        ];
+
+        function playSound() {
+            const randomSound = stuartSounds[Math.floor(Math.random() * stuartSounds.length)];
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = randomSound;
+            messageDiv.style.animation = 'bounce 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                messageDiv.style.animation = '';
+            }, 500);
+        }
+
+        function changeColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            document.body.style.background = colors[colorIndex];
+            
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = '¡Colores cambiados! 🎨';
+        }
+
+        function showFact() {
+            const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 💡 ${randomFact};
+        }
+
+        // Efectos adicionales
+        document.addEventListener('mousemove', (e) => {
+            const bananas = document.querySelectorAll('.banana');
+            bananas.forEach((banana, index) => {
+                const speed = 0.01 * (index + 1);
+                const x = e.clientX * speed;
+                const y = e.clientY * speed;
+                banana.style.transform += ` translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+        });
+
+        // Mensaje de bienvenida
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('message').textContent = '¡Bienvenido al mundo de Stuart! 🍌';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
